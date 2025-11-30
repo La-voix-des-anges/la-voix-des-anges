@@ -171,15 +171,11 @@ export async function registerRoutes(
       return res.status(400).json({ error: "Vous ne pouvez pas vous supprimer vous-même" });
     }
 
-    try {
-      const deleted = await storage.deleteUser(parseInt(req.params.id));
-      if (!deleted) {
-        return res.status(404).json({ error: "Utilisateur non trouvé" });
-      }
-      res.json({ success: true });
-    } catch (error) {
-      res.status(400).json({ error: "Impossible de supprimer cet utilisateur (utilisateur a des articles ou discussions)" });
+    const deleted = await storage.deleteUser(parseInt(req.params.id));
+    if (!deleted) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
     }
+    res.json({ success: true });
   });
 
   // ============== CATEGORY ROUTES ==============
