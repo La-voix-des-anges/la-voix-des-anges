@@ -37,6 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     onSuccess: (userData) => {
       setUser(userData);
       queryClient.setQueryData(["/api/auth/me"], userData);
+      // Force a refetch to ensure React Query data is synchronized
+      refetch();
     },
   });
 
