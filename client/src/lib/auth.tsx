@@ -55,7 +55,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     await loginMutation.mutateAsync(credentials);
-  }, [loginMutation]);
+    // Wait for refetch to complete to confirm session is valid
+    const result = await refetch();
+    if (!result.data) {
+      throw new Error("Authentification échouée");
+    }
+  }, [loginMutation, refetch]);
 
   const logout = useCallback(async () => {
     await logoutMutation.mutateAsync();

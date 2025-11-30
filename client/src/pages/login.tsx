@@ -42,6 +42,8 @@ export default function LoginPage() {
         title: "Connexion réussie",
         description: "Bienvenue sur le tableau de bord !",
       });
+      // Wait a moment for state to update, then navigate
+      await new Promise(resolve => setTimeout(resolve, 100));
       navigate("/dashboard");
     } catch (error: any) {
       toast({
