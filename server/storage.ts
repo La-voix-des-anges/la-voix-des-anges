@@ -239,7 +239,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteUser(id: number): Promise<boolean> {
-    const result = await db.delete(users).where(eq(users.id, id));
+    // Check if user has articles
+    const userArticles = await db
+      .select()
+      .from(articles)
+      .where(eq(articles.authorId, id));
+    
+    if (userArticles.length > 0) {
+      throw new Error("Cannot delete user with existing articles");
+    }
+    
+    await db.delete(users).where(eq(users.id, id));
     return true;
   }
 
