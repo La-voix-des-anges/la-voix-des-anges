@@ -38,6 +38,7 @@ const adminNavItems = [
   { href: "/dashboard/tous-les-articles", label: "Tous les articles", icon: FolderOpen },
   { href: "/dashboard/utilisateurs", label: "Utilisateurs", icon: Users },
   { href: "/dashboard/categories", label: "Catégories", icon: Tags },
+  { href: "/dashboard/tags", label: "Tags", icon: Tags },
 ];
 
 export function AdminSidebar() {

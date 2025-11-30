@@ -290,8 +290,8 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
                       <FormItem>
                         <FormLabel>Catégorie</FormLabel>
                         <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          onValueChange={(value) => field.onChange(parseInt(value))}
+                          defaultValue={String(field.value)}
                         >
                           <FormControl>
                             <SelectTrigger data-testid="select-category">
@@ -302,7 +302,7 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
                             {categories.map((category) => (
                               <SelectItem
                                 key={category.id}
-                                value={category.id}
+                                value={String(category.id)}
                                 data-testid={`option-category-${category.id}`}
                               >
                                 <div className="flex items-center gap-2">

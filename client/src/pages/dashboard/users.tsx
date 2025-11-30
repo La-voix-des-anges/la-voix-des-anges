@@ -394,9 +394,18 @@ export default function UsersPage() {
                               ? "Rétrograder en rédacteur"
                               : "Promouvoir admin"}
                           </DropdownMenuItem>
+                          <DropdownMenuItem data-testid={`button-change-password-${user.id}`}>
+                            <PenLine className="h-4 w-4 mr-2" />
+                            Changer le mot de passe
+                          </DropdownMenuItem>
+                          <DropdownMenuItem data-testid={`button-suspend-user-${user.id}`} className="text-destructive">
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Suspendre
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => setDeleteUserId(user.id)}
                             className="text-destructive"
+                            data-testid={`button-delete-user-${user.id}`}
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Supprimer

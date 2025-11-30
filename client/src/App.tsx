@@ -24,6 +24,7 @@ import EditArticlePage from "@/pages/dashboard/edit-article";
 import AllArticlesPage from "@/pages/dashboard/all-articles";
 import UsersPage from "@/pages/dashboard/users";
 import CategoriesAdminPage from "@/pages/dashboard/categories-admin";
+import TagsAdminPage from "@/pages/dashboard/tags-admin";
 import DiscussionsPage from "@/pages/dashboard/discussions";
 
 function Router() {
@@ -71,6 +72,11 @@ function Router() {
       <Route path="/dashboard/categories">
         <DashboardLayout>
           <CategoriesAdminPage />
+        </DashboardLayout>
+      </Route>
+      <Route path="/dashboard/tags">
+        <DashboardLayout>
+          <TagsAdminPage />
         </DashboardLayout>
       </Route>
       <Route path="/dashboard/discussions">
