@@ -1,0 +1,55 @@
+## Contenu et édition
+
+- **Types de contenu:** Articles,catégories, tags, auteurs, médias (images/vidéos).
+- **Cycle de vie du contenu:** Brouillon, en relecture, approuvé, programmé, publié, archivé.
+- **Workflow éditorial:** Assignation d’articles, relectures, validations, historique des versions, commentaires internes.
+- **Programmation:** Publication à date/heure planifiée, mise à jour programmée, dépublication.
+- **Média-thèque:** Import, description, alt text, recadrage, optimisation d’images, réutilisation.
+- **SEO par contenu:** Titre SEO, meta description, slug éditable, balises canonique, données structurées, sitemap et indexation.
+- **Mises en avant:** Une, épinglés, “à la une”, carrousels, highlights par catégorie.
+- **Recherche et navigation:** Recherche plein texte, filtres par catégorie/tag/auteur/date, pagination, fil d’Ariane.
+
+---
+
+## Utilisateurs, rôles et profils
+
+- **Rôles:** Lecteur, rédacteur (limité à ses contenus), administrateur (contrôle global).
+- **Permissions:** Matrice fine (créer, éditer, supprimer, publier, modérer, configurer, voir les logs).
+- **Profils publics redacteur:**  photo, liste des publications.
+- **Comptes et confidentialité:** Inscription, connexion, récupération de compte, suppression/export des données, préférences.
+
+---
+
+## Engagement et communauté
+
+- **Commentaires:** Publication par utilisateurs authentifiés, fils de discussion, signalement, modération (file d’attente, approbation, blocage).
+- **Réactions:** Likes, bookmarks/lectures sauvegardées, temps de lecture estimé.
+- **Newsletter:** Inscription, double opt-in, préférences (fréquence/thèmes), envoi de nouvelles publications, templates d’email.
+- **Notifications:** Email et (optionnel) web push pour nouvelles publications, réponses aux commentaires, mentions.
+- **Partage social:** Boutons de partage, cartes sociales (Open Graph/Twitter), suivi des performances de partage.
+
+---
+
+## Distribution, intégrations et découverte
+
+- **Flux externes:** RSS/Atom par site, catégorie, auteur; sitemap auto; ping des moteurs de recherche.
+- **Intégrations:** Analytics, anti-spam, CDN médias, outils de rédaction (ex. Grammarly), webhooks (publication/maj).
+- **Recommandations:** Articles similaires (par tag/catégorie), tendances, “continuez votre lecture”.
+
+---
+
+## Opérations, qualité et sécurité
+
+- **Performance:** Caching des pages/queries, pagination, lazy-loading images, minification, CDN.
+- **Accessibilité:** Contrastes, alt text, navigation clavier, ARIA, tailles de police ajustables, lecteur immersif.
+- **Conformité:** Consentement cookies, politique de confidentialité, mentions légales, conformité RGPD (opt-in, droit à l’oubli).
+- **Journalisation et audit:** Logs d’accès et d’erreurs, audit trail des actions (qui a fait quoi, quand), exports.
+- **Modération et protection:** Throttling/rate-limit, protection brute-force, captcha, filtrage de contenu, liste noire de mots.
+- **Sauvegarde et restauration:** Backups contenus/médias, points de restauration, procédures d’incident.
+
+## Administration et pilotage
+
+- **Tableau de bord:** Statuts des articles (brouillons, en relecture, à publier), files de modération, métriques clés (lectures, engagement).
+- **Rapports:** Performances par catégorie/auteur, meilleurs articles, taux d’ouverture newsletter, croissance des abonnés.
+- **Thèmes et apparence:** Personnalisation de la charte (couleurs, typographies), mode sombre, mise en page des sections.
+- **Pages système:** Accueil, liste d’articles, détail article, auteur, catégorie, recherche, contact, à propos, politique, 404.
