@@ -43,8 +43,8 @@ const articleFormSchema = z.object({
   excerpt: z.string().min(10, "L'extrait doit contenir au moins 10 caractères"),
   content: z.string().min(50, "Le contenu doit contenir au moins 50 caractères"),
   coverImageUrl: z.string().optional(),
-  categoryId: z.string().min(1, "Veuillez sélectionner une catégorie"),
-  tagIds: z.array(z.string()).default([]),
+  categoryId: z.number().int("Veuillez sélectionner une catégorie"),
+  tagIds: z.array(z.number().int()).default([]),
 });
 
 type ArticleFormData = z.infer<typeof articleFormSchema>;
@@ -74,8 +74,8 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
       excerpt: article?.excerpt || "",
       content: article?.content || "",
       coverImageUrl: article?.coverImageUrl || "",
-      categoryId: article?.categoryId || "",
-      tagIds: article?.tagIds || [],
+      categoryId: article?.categoryId || 0,
+      tagIds: article?.tags?.map(t => t.id) || [],
     },
   });
 
@@ -139,32 +139,22 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
   });
 
   const onSaveDraft = (data: ArticleFormData) => {
-    const processedData = {
-      ...data,
-      categoryId: parseInt(data.categoryId, 10),
-      tagIds: data.tagIds.map((id) => parseInt(id, 10)),
-    };
     if (mode === "create") {
-      createMutation.mutate({ ...processedData, status: "draft" });
+      createMutation.mutate({ ...data, status: "draft" });
     } else {
-      updateMutation.mutate(processedData);
+      updateMutation.mutate(data);
     }
   };
 
   const onSubmitForReview = (data: ArticleFormData) => {
-    const processedData = {
-      ...data,
-      categoryId: parseInt(data.categoryId, 10),
-      tagIds: data.tagIds.map((id) => parseInt(id, 10)),
-    };
     if (mode === "create") {
-      createMutation.mutate({ ...processedData, status: "pending" });
+      createMutation.mutate({ ...data, status: "pending" });
     } else {
-      updateMutation.mutate({ ...processedData, status: "pending" });
+      updateMutation.mutate({ ...data, status: "pending" });
     }
   };
 
-  const toggleTag = (tagId: string) => {
+  const toggleTag = (tagId: number) => {
     const currentTags = form.getValues("tagIds");
     if (currentTags.includes(tagId)) {
       form.setValue(

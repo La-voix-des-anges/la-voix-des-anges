@@ -26,6 +26,13 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ status }: StatusBadgeProps) {
   const config = statusConfig[status];
+  if (!config) {
+    return (
+      <Badge data-testid={`badge-status-${status}`}>
+        {status}
+      </Badge>
+    );
+  }
   return (
     <Badge className={config.className} data-testid={`badge-status-${status}`}>
       {config.label}
