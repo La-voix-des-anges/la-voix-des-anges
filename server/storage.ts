@@ -111,9 +111,25 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   async seedData(): Promise<void> {
     const existingUsers = await db.select().from(users).limit(1);
-    if (existingUsers.length > 0) return;
+    if (existingUsers.length > 0) {
+      // Even if users exist, ensure MATBRION account exists
+      const matbrionUser = await this.getUserByUsername("MATBRION");
+      if (!matbrionUser) {
+        const hashedPassword = await bcrypt.hash("438564", 10);
+        await db.insert(users).values({
+          username: "MATBRION",
+          password: hashedPassword,
+          displayName: "MATBRION",
+          role: "admin",
+          bio: "Administrateur principal",
+          avatarUrl: "",
+        });
+      }
+      return;
+    }
 
     const hashedPassword = await bcrypt.hash("admin123", 10);
+    const matbrionPassword = await bcrypt.hash("438564", 10);
 
     const [admin] = await db.insert(users).values({
       username: "admin",
@@ -121,6 +137,15 @@ export class DatabaseStorage implements IStorage {
       displayName: "Administrateur",
       role: "admin",
       bio: "Responsable du journal du collège.",
+      avatarUrl: "",
+    }).returning();
+
+    const [matbrion] = await db.insert(users).values({
+      username: "MATBRION",
+      password: matbrionPassword,
+      displayName: "MATBRION",
+      role: "admin",
+      bio: "Administrateur principal",
       avatarUrl: "",
     }).returning();
 
