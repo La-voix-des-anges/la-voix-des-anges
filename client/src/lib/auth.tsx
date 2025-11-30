@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { queryClient, apiRequest, getQueryFn } from "./queryClient";
+import { queryClient, apiRequest } from "./queryClient";
 import type { User, LoginCredentials } from "@shared/schema";
 
 interface AuthContextType {
@@ -37,8 +37,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     onSuccess: (userData) => {
       setUser(userData);
       queryClient.setQueryData(["/api/auth/me"], userData);
-      // Force refetch to confirm server-side session
-      refetch();
     },
   });
 
@@ -55,11 +53,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     await loginMutation.mutateAsync(credentials);
-    // Ensure the session is confirmed server-side before returning
-    await queryClient.ensureQueryData({
-      queryKey: ["/api/auth/me"],
-      queryFn: getQueryFn({ on401: "returnNull" }),
-    });
   }, [loginMutation]);
 
   const logout = useCallback(async () => {
