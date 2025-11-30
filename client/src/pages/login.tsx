@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation, Link } from "wouter";
@@ -42,7 +42,7 @@ export default function LoginPage() {
         title: "Connexion réussie",
         description: "Bienvenue sur le tableau de bord !",
       });
-      // Don't navigate yet - let the useEffect below handle it when auth context updates
+      navigate("/dashboard");
     } catch (error: any) {
       toast({
         title: "Erreur de connexion",
@@ -52,13 +52,6 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
-
-  // Navigate to dashboard once user is authenticated
-  useEffect(() => {
-    if (isAuthenticated && user && !isLoading) {
-      navigate("/dashboard");
-    }
-  }, [isAuthenticated, user, isLoading, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
