@@ -239,17 +239,32 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteUser(id: number): Promise<boolean> {
-    // Reassign user's articles to admin (user 1)
-    await db
-      .update(articles)
-      .set({ authorId: 1 })
-      .where(eq(articles.authorId, id));
+    // Find another admin to reassign content to (preferring admin user, then any other admin)
+    const allAdmins = await db
+      .select()
+      .from(users)
+      .where(eq(users.role, "admin"));
     
-    // Reassign user's messages to admin (user 1)
-    await db
-      .update(messages)
-      .set({ authorId: 1 })
-      .where(eq(messages.authorId, id));
+    let reassignTo = allAdmins.find(u => u.id !== id)?.id || 1;
+    
+    // If trying to delete user 1 and they're the only admin, prevent it
+    if (id === 1 && allAdmins.filter(u => u.id !== id).length === 0) {
+      throw new Error("Cannot delete the last admin user");
+    }
+    
+    // Reassign user's articles
+    if (reassignTo !== id) {
+      await db
+        .update(articles)
+        .set({ authorId: reassignTo })
+        .where(eq(articles.authorId, id));
+      
+      // Reassign user's messages
+      await db
+        .update(messages)
+        .set({ authorId: reassignTo })
+        .where(eq(messages.authorId, id));
+    }
     
     // Delete the user
     await db.delete(users).where(eq(users.id, id));
