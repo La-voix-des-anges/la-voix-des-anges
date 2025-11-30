@@ -139,18 +139,28 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
   });
 
   const onSaveDraft = (data: ArticleFormData) => {
+    const processedData = {
+      ...data,
+      categoryId: parseInt(data.categoryId, 10),
+      tagIds: data.tagIds.map((id) => parseInt(id, 10)),
+    };
     if (mode === "create") {
-      createMutation.mutate({ ...data, status: "draft" });
+      createMutation.mutate({ ...processedData, status: "draft" });
     } else {
-      updateMutation.mutate(data);
+      updateMutation.mutate(processedData);
     }
   };
 
   const onSubmitForReview = (data: ArticleFormData) => {
+    const processedData = {
+      ...data,
+      categoryId: parseInt(data.categoryId, 10),
+      tagIds: data.tagIds.map((id) => parseInt(id, 10)),
+    };
     if (mode === "create") {
-      createMutation.mutate({ ...data, status: "pending" });
+      createMutation.mutate({ ...processedData, status: "pending" });
     } else {
-      updateMutation.mutate({ ...data, status: "pending" });
+      updateMutation.mutate({ ...processedData, status: "pending" });
     }
   };
 
