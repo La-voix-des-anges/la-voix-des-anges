@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import {
   Form,
   FormControl,
@@ -273,11 +273,10 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
                       <FormItem>
                         <FormLabel>Contenu</FormLabel>
                         <FormControl>
-                          <Textarea
+                          <RichTextEditor
+                            value={field.value}
+                            onChange={field.onChange}
                             placeholder="Écrivez votre article ici..."
-                            className="min-h-[300px] resize-y font-mono text-sm"
-                            {...field}
-                            data-testid="input-article-content"
                           />
                         </FormControl>
                         <FormMessage />
