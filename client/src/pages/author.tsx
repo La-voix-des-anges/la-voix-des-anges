@@ -13,10 +13,14 @@ import type { User, ArticleWithAuthor } from "@shared/schema";
 export default function AuthorPage() {
   const { username } = useParams<{ username: string }>();
 
+  console.log("AuthorPage - username from params:", username);
+
   const { data: author, isLoading: authorLoading, error } = useQuery<User>({
     queryKey: ["/api/users/by-username", username],
     enabled: !!username,
   });
+
+  console.log("Author query result:", { author, isLoading: authorLoading, error });
 
   const { data: articles = [], isLoading: articlesLoading } = useQuery<ArticleWithAuthor[]>({
     queryKey: ["/api/articles", { authorId: author?.id, status: "published" }],
