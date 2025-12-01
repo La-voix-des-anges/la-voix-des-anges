@@ -22,6 +22,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth";
@@ -44,9 +45,14 @@ const adminNavItems = [
 export function AdminSidebar() {
   const [location] = useLocation();
   const { user, logout, isAdmin } = useAuth();
+  const { setOpen } = useSidebar();
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const handleNavClick = () => {
+    setOpen(false);
   };
 
   return (
@@ -68,6 +74,7 @@ export function AdminSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={location === item.href}
+                    onClick={handleNavClick}
                   >
                     <Link href={item.href} data-testid={`link-sidebar-${item.label.toLowerCase().replace(/\s/g, "-")}`}>
                       <item.icon className="h-4 w-4" />
@@ -90,6 +97,7 @@ export function AdminSidebar() {
                     <SidebarMenuButton
                       asChild
                       isActive={location === item.href}
+                      onClick={handleNavClick}
                     >
                       <Link href={item.href} data-testid={`link-sidebar-admin-${item.label.toLowerCase().replace(/\s/g, "-")}`}>
                         <item.icon className="h-4 w-4" />
