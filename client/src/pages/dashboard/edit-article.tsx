@@ -10,6 +10,8 @@ export default function EditArticlePage() {
   const { id } = useParams<{ id: string }>();
   const articleId = id ? parseInt(id, 10) : undefined;
 
+  console.log("EditArticlePage - raw id:", id, "parsed articleId:", articleId);
+
   const { data: article, isLoading, error } = useQuery<Article>({
     queryKey: ["/api/articles", articleId],
     enabled: !!articleId,
