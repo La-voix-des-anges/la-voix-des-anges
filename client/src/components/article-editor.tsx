@@ -51,10 +51,11 @@ type ArticleFormData = z.infer<typeof articleFormSchema>;
 
 interface ArticleEditorProps {
   article?: Article;
+  articleId?: number;
   mode: "create" | "edit";
 }
 
-export function ArticleEditor({ article, mode }: ArticleEditorProps) {
+export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) {
   const [, navigate] = useLocation();
   const { toast } = useToast();
 
@@ -142,16 +143,16 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
   const onSaveDraft = (data: ArticleFormData) => {
     if (mode === "create") {
       createMutation.mutate({ ...data, status: "draft" });
-    } else if (article) {
-      updateMutation.mutate({ ...data, articleId: article.id });
+    } else if (articleId) {
+      updateMutation.mutate({ ...data, articleId });
     }
   };
 
   const onSubmitForReview = (data: ArticleFormData) => {
     if (mode === "create") {
       createMutation.mutate({ ...data, status: "pending" });
-    } else if (article) {
-      updateMutation.mutate({ ...data, articleId: article.id, status: "pending" });
+    } else if (articleId) {
+      updateMutation.mutate({ ...data, articleId, status: "pending" });
     }
   };
 

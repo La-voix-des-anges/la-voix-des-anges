@@ -48,5 +48,5 @@ export default function EditArticlePage() {
     );
   }
 
-  return <ArticleEditor article={article} mode="edit" />;
+  return <ArticleEditor article={article} mode="edit" articleId={article?.id} />;
 }
