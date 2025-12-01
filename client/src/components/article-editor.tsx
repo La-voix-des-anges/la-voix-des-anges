@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import { useAuth } from "@/lib/auth";
 import {
   Save,
   Send,
@@ -58,6 +59,7 @@ interface ArticleEditorProps {
 export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) {
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
@@ -153,10 +155,11 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
 
   const onSubmitForReview = (data: ArticleFormData) => {
     console.log("onSubmitForReview called with data:", data, "articleId:", articleId, "mode:", mode);
+    const status = user?.role === "admin" ? "published" : "pending";
     if (mode === "create") {
-      createMutation.mutate({ ...data, status: "pending" });
+      createMutation.mutate({ ...data, status });
     } else if (articleId) {
-      updateMutation.mutate({ ...data, articleId, status: "pending" });
+      updateMutation.mutate({ ...data, articleId, status });
     } else {
       console.error("Cannot submit: no articleId for edit mode");
     }
@@ -405,23 +408,25 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
               </Card>
 
               <div className="flex flex-col gap-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  disabled={isPending}
-                  onClick={() => {
-                    console.log("Save draft button clicked, form errors:", form.formState.errors);
-                    form.handleSubmit(onSaveDraft)();
-                  }}
-                  data-testid="button-save-draft"
-                >
-                  {isPending ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <Save className="h-4 w-4 mr-2" />
-                  )}
-                  Sauvegarder le brouillon
-                </Button>
+                {user?.role !== "admin" && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isPending}
+                    onClick={() => {
+                      console.log("Save draft button clicked, form errors:", form.formState.errors);
+                      form.handleSubmit(onSaveDraft)();
+                    }}
+                    data-testid="button-save-draft"
+                  >
+                    {isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4 mr-2" />
+                    )}
+                    Sauvegarder le brouillon
+                  </Button>
+                )}
                 <Button
                   type="button"
                   disabled={isPending}
@@ -436,7 +441,7 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
                   ) : (
                     <Send className="h-4 w-4 mr-2" />
                   )}
-                  Soumettre pour validation
+                  {user?.role === "admin" ? "Publier" : "Soumettre pour validation"}
                 </Button>
               </div>
             </div>
