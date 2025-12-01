@@ -141,18 +141,24 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
   });
 
   const onSaveDraft = (data: ArticleFormData) => {
+    console.log("onSaveDraft called with data:", data, "articleId:", articleId, "mode:", mode);
     if (mode === "create") {
       createMutation.mutate({ ...data, status: "draft" });
     } else if (articleId) {
       updateMutation.mutate({ ...data, articleId });
+    } else {
+      console.error("Cannot save: no articleId for edit mode");
     }
   };
 
   const onSubmitForReview = (data: ArticleFormData) => {
+    console.log("onSubmitForReview called with data:", data, "articleId:", articleId, "mode:", mode);
     if (mode === "create") {
       createMutation.mutate({ ...data, status: "pending" });
     } else if (articleId) {
       updateMutation.mutate({ ...data, articleId, status: "pending" });
+    } else {
+      console.error("Cannot submit: no articleId for edit mode");
     }
   };
 
@@ -403,7 +409,10 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
                   type="button"
                   variant="outline"
                   disabled={isPending}
-                  onClick={form.handleSubmit(onSaveDraft)}
+                  onClick={() => {
+                    console.log("Save draft button clicked, form errors:", form.formState.errors);
+                    form.handleSubmit(onSaveDraft)();
+                  }}
                   data-testid="button-save-draft"
                 >
                   {isPending ? (
@@ -416,7 +425,10 @@ export function ArticleEditor({ article, articleId, mode }: ArticleEditorProps) 
                 <Button
                   type="button"
                   disabled={isPending}
-                  onClick={form.handleSubmit(onSubmitForReview)}
+                  onClick={() => {
+                    console.log("Submit review button clicked, form errors:", form.formState.errors);
+                    form.handleSubmit(onSubmitForReview)();
+                  }}
                   data-testid="button-submit-review"
                 >
                   {isPending ? (
