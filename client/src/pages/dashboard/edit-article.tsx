@@ -8,10 +8,11 @@ import type { Article } from "@shared/schema";
 
 export default function EditArticlePage() {
   const { id } = useParams<{ id: string }>();
+  const articleId = id ? parseInt(id, 10) : undefined;
 
   const { data: article, isLoading, error } = useQuery<Article>({
-    queryKey: ["/api/articles", id],
-    enabled: !!id,
+    queryKey: ["/api/articles", articleId],
+    enabled: !!articleId,
   });
 
   if (isLoading) {
@@ -48,5 +49,5 @@ export default function EditArticlePage() {
     );
   }
 
-  return <ArticleEditor article={article} mode="edit" articleId={article?.id} />;
+  return <ArticleEditor article={article} mode="edit" articleId={articleId} />;
 }
