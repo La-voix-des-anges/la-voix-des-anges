@@ -118,12 +118,13 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async (data: ArticleFormData & { status?: ArticleStatus }) => {
-      return apiRequest("PATCH", `/api/articles/${article?.id}`, data);
+    mutationFn: async (data: ArticleFormData & { status?: ArticleStatus; articleId: number }) => {
+      const { articleId, ...restData } = data;
+      return apiRequest("PATCH", `/api/articles/${articleId}`, restData);
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/articles", article?.id] });
+      queryClient.invalidateQueries({ queryKey: ["/api/articles", variables.articleId] });
       toast({
         title: "Article mis à jour",
         description: "Votre article a été mis à jour avec succès.",
@@ -141,16 +142,16 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
   const onSaveDraft = (data: ArticleFormData) => {
     if (mode === "create") {
       createMutation.mutate({ ...data, status: "draft" });
-    } else {
-      updateMutation.mutate(data);
+    } else if (article) {
+      updateMutation.mutate({ ...data, articleId: article.id });
     }
   };
 
   const onSubmitForReview = (data: ArticleFormData) => {
     if (mode === "create") {
       createMutation.mutate({ ...data, status: "pending" });
-    } else {
-      updateMutation.mutate({ ...data, status: "pending" });
+    } else if (article) {
+      updateMutation.mutate({ ...data, articleId: article.id, status: "pending" });
     }
   };
 
