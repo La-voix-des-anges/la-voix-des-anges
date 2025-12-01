@@ -87,6 +87,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       <div className="border rounded-lg overflow-hidden bg-background">
         <div className="flex flex-wrap gap-1 p-2 border-b bg-muted/50">
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -97,6 +98,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <Bold className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -107,6 +109,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <Italic className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -117,6 +120,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <Heading2 className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -127,6 +131,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <Heading3 className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -137,6 +142,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <List className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -147,6 +153,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <ListOrdered className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -157,6 +164,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <Code className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -167,6 +175,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           </Button>
           <div className="w-px bg-border mx-1" />
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -176,6 +185,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
             <Undo2 className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             size="icon"
             variant="ghost"
             className="h-8 w-8"
@@ -233,6 +243,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           </div>
           <DialogFooter>
             <Button
+              type="button"
               variant="outline"
               onClick={() => setImageDialogOpen(false)}
               data-testid="button-cancel"
@@ -240,6 +251,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
               Annuler
             </Button>
             <Button
+              type="button"
               onClick={handleAddImage}
               disabled={!imageUrl}
               data-testid="button-insert-image"
