@@ -43,7 +43,7 @@ const articleFormSchema = z.object({
   excerpt: z.string().min(10, "L'extrait doit contenir au moins 10 caractères"),
   content: z.string().min(50, "Le contenu doit contenir au moins 50 caractères"),
   coverImageUrl: z.string().optional(),
-  categoryId: z.number().int("Veuillez sélectionner une catégorie"),
+  categoryId: z.number().int("Veuillez sélectionner une catégorie").refine(id => id > 0, "Veuillez sélectionner une catégorie"),
   tagIds: z.array(z.number().int()).default([]),
 });
 
@@ -291,8 +291,8 @@ export function ArticleEditor({ article, mode }: ArticleEditorProps) {
                       <FormItem>
                         <FormLabel>Catégorie</FormLabel>
                         <Select
-                          onValueChange={(value) => field.onChange(parseInt(value))}
-                          defaultValue={String(field.value)}
+                          onValueChange={(value) => field.onChange(parseInt(value, 10))}
+                          defaultValue={field.value ? String(field.value) : ""}
                         >
                           <FormControl>
                             <SelectTrigger data-testid="select-category">
